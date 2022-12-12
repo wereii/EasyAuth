@@ -3,7 +3,7 @@ package xyz.nikitacartes.easyauth.mixin;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
-import net.minecraft.util.Uuids;
+import net.minecraft.util.dynamic.DynamicSerializableUuid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
@@ -66,7 +66,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
                 String playername = (new GameProfile(null, packet.name())).getName().toLowerCase();
                 Pattern pattern = Pattern.compile("^[a-z0-9_]{3,16}$");
                 Matcher matcher = pattern.matcher(playername);
-                if (playerCacheMap.containsKey(Uuids.getOfflinePlayerUuid(playername).toString()) || !matcher.matches() || config.main.forcedOfflinePlayers.contains(playername)) {
+                if (playerCacheMap.containsKey(DynamicSerializableUuid.getOfflinePlayerUuid(playername).toString()) || !matcher.matches() || config.main.forcedOfflinePlayers.contains(playername)) {
                     // Player definitely doesn't have a mojang account
                     state = ServerLoginNetworkHandler.State.READY_TO_ACCEPT;
 

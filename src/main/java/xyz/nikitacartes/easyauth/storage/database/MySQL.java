@@ -205,7 +205,7 @@ public class MySQL implements DbApi {
 
                     preparedStatement.addBatch();
                 } catch (SQLException e) {
-                    LOGGER.atError().setMessage("Error saving player data! {} ").addArgument(uuid).setCause(e).log();
+                    LOGGER.error("Error saving player data!", e);
                 }
             });
             preparedStatement.executeBatch();
